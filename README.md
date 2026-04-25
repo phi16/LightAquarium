@@ -1,0 +1,5 @@
+# Light Aquarium
+
+## License
+
+MIT

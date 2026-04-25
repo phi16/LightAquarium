@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: a4d2457cd6c63b448a389226aef164ba
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 14030a0b230d45068f811d1ad116f246, type: 3}
+  debugBuild: 0
+  samplerCount: 0
+  textureCount: 0
+  featureCount: 0
+  Errors: []
+  ShaderName: '"orels1/Standard"'
+  LightingModel: '@/LightingModels/PBR'
+  IncludedModules:
+  - Packages/sh.orels.shaders.generator/Runtime/Sources/Modules/Parallax.orlsource
+  - Packages/sh.orels.shaders.generator/Runtime/Sources/Modules/Details.orlsource
+  - Packages/sh.orels.shaders.generator/Runtime/Sources/Modules/VRCFeatures.orlsource
+  - Packages/sh.orels.shaders.generator/Runtime/Sources/Modules/VRCLightVolumes.orlsource
