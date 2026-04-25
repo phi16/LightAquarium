@@ -19,6 +19,7 @@
   - [VRC Light Volumes](https://github.com/REDSIM/VRCLightVolumes/tree/main#Installation-through-VRChat-Creator-Companion), 2.1.3
   - [ORL Shaders](https://github.com/orels1/orels-Unity-Shaders#for-vcc-users), 7.3.0-dev.2
 - Creator Companion などでパッケージの解決をしてください
+- `Assets/LVRoom/Scene.unity` を開いてください
 
 ## License
 
