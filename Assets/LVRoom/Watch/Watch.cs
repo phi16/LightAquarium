@@ -47,7 +47,7 @@ public class Watch : UdonSharpBehaviour
         paraCore.isRunning = running;
         computeFluid.enabled = running;
         foreach (AudioSource s in bgmSources) {
-            s.mute = !running;
+            if(s != null) s.mute = !running;
         }
         sphereSound.SetRunning(running);
     }
