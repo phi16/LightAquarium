@@ -15,6 +15,8 @@ public class HLCubes : UdonSharpBehaviour
     public RectTransform canvasRect;
     public Obstacles obstacles;
 
+    public Transform initialCubes;
+
     private const int N = 4096;
     // [px,py,pz,size][qx,qy,qz,len]
     [UdonSynced] Vector4[] data;
@@ -33,7 +35,7 @@ public class HLCubes : UdonSharpBehaviour
     private int morphResetCaller = 0;
     private bool unfinalized = false;
 
-    void SetCube(ref int j, int x, int y, int z, Vector3 dir, int s, int e)
+    void SetCube(ref int j, float x, float y, float z, Vector3 dir, int s, int e)
     {
         const float grid = /* 64 */ 32 / 10.0f;
         Vector3 p = new Vector3(x, y, z) / grid;
@@ -62,18 +64,32 @@ public class HLCubes : UdonSharpBehaviour
         }
         activateCount = 0;
         if(Networking.IsMaster) {
-            data = new Vector4[18];
-            int j = 0;
+            if(initialCubes != null) {
+                var ics = initialCubes.GetComponentsInChildren<HLInitialCube>();
+                var count = ics.Length;
+                if(count < 2) count = 2;
+                data = new Vector4[count*2];
+                int j = 0;
+                for(int i=0;i<ics.Length;i++) {
+                    var c = ics[i];
+                    if(c.s > 0 && c.e > 0) {
+                        SetCube(ref j, c.origin.x, c.origin.y, c.origin.z, c.dir, c.s, c.e);
+                    }
+                }
+            } else {
+                data = new Vector4[20];
+                int j = 0;
 
-            SetCube(ref j, 12, 4, 12, Vector3.down, 8, 1);
-            SetCube(ref j, 0, 5, 16, Vector3.back, 2, 4);
-            SetCube(ref j, -12, 8, 12, Vector3.down, 8, 1);
-            SetCube(ref j, -16, 9, 0, Vector3.right, 2, 4);
-            SetCube(ref j, -12, 12, -12, Vector3.down, 8, 1);
-            SetCube(ref j, 0, 13, -16, Vector3.forward, 2, 4);
-            SetCube(ref j, 12, 16, -12, Vector3.down, 8, 1);
-            SetCube(ref j, 16, 17, 0, Vector3.left, 2, 4);
-            SetCube(ref j, 12, 20, 12, Vector3.down, 8, 1);
+                SetCube(ref j, 12, 4, 12, Vector3.down, 8, 1);
+                SetCube(ref j, 0, 5, 16, Vector3.back, 2, 4);
+                SetCube(ref j, -12, 8, 12, Vector3.down, 8, 1);
+                SetCube(ref j, -16, 9, 0, Vector3.right, 2, 4);
+                SetCube(ref j, -12, 12, -12, Vector3.down, 8, 1);
+                SetCube(ref j, 0, 13, -16, Vector3.forward, 2, 4);
+                SetCube(ref j, 12, 16, -12, Vector3.down, 8, 1);
+                SetCube(ref j, 16, 17, 0, Vector3.left, 2, 4);
+                SetCube(ref j, 12, 20, 12, Vector3.down, 8, 1);
+            }
 
             Reflect();
             RequestSerialization();
